@@ -1,0 +1,78 @@
+services:
+  # Web Frontend Service
+  - type: web
+    name: open-swe-web
+    runtime: node
+    rootDir: apps/web
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: https://open-swe-web.onrender.com/api
+      - key: LANGGRAPH_API_URL
+        value: https://open-swe-agent.onrender.com
+      - key: NEXT_PUBLIC_GITHUB_APP_CLIENT_ID
+        sync: false
+      - key: GITHUB_APP_CLIENT_SECRET
+        sync: false
+      - key: GITHUB_APP_REDIRECT_URI
+        value: https://open-swe-web.onrender.com/api/auth/github/callback
+      - key: GITHUB_APP_NAME
+        sync: false
+      - key: GITHUB_APP_ID
+        sync: false
+      - key: GITHUB_APP_PRIVATE_KEY
+        sync: false
+      - key: SECRETS_ENCRYPTION_KEY
+        sync: false
+      - key: NEXT_PUBLIC_ALLOWED_USERS_LIST
+        sync: false
+
+  # LangGraph Agent Service
+  - type: web
+    name: open-swe-agent
+    runtime: node
+    rootDir: apps/open-swe
+    buildCommand: npm install && npm run build
+    startCommand: npx langgraphjs start --config ../../langgraph.json
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: LANGCHAIN_PROJECT
+        sync: false
+      - key: LANGCHAIN_API_KEY
+        sync: false
+      - key: LANGCHAIN_TRACING_V2
+        value: true
+      - key: LANGCHAIN_TEST_TRACKING
+        value: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: DAYTONA_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: GITHUB_APP_NAME
+        sync: false
+      - key: GITHUB_APP_ID
+        sync: false
+      - key: GITHUB_APP_PRIVATE_KEY
+        sync: false
+      - key: GITHUB_WEBHOOK_SECRET
+        sync: false
+      - key: OPEN_SWE_APP_URL
+        value: https://open-swe-web.onrender.com
+      - key: SECRETS_ENCRYPTION_KEY
+        sync: false
+      - key: SKIP_CI_UNTIL_LAST_COMMIT
+        value: true
+      - key: NEXT_PUBLIC_ALLOWED_USERS_LIST
+        sync: false
